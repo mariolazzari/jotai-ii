@@ -1,13 +1,13 @@
 import { useAtom } from "jotai";
-import { sideLengthAtom } from "./atoms";
+import { readOnlyVolume } from "./atoms";
 
 export function Volume() {
-  const [sideLength] = useAtom(sideLengthAtom);
+  const [volume] = useAtom(readOnlyVolume);
 
   return (
     <div className="row">
-      <div>Volume</div>
-      <div>{sideLength * sideLength * sideLength}</div>
+      <h4>Volume</h4>
+      <h3>{volume}</h3>
     </div>
   );
 }

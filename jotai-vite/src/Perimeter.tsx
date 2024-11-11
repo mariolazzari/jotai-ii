@@ -1,13 +1,13 @@
 import { useAtom } from "jotai";
-import { sideLengthAtom } from "./atoms";
+import { readOnlyPerimeter } from "./atoms";
 
 export function Perimeter() {
-  const [sideLength] = useAtom(sideLengthAtom);
+  const [perimeter] = useAtom(readOnlyPerimeter);
 
   return (
     <div className="row">
-      <div>Perimeter</div>
-      <div>{4 * sideLength}</div>
+      <h4>Perimeter</h4>
+      <h3>{perimeter}</h3>
     </div>
   );
 }

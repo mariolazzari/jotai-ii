@@ -1,31 +1,52 @@
 import { useAtom } from "jotai";
 import { ChangeEventHandler, useState } from "react";
-import { sideLengthAtom } from "./atoms";
+import { priceAtom, sideLengthAtom } from "./atoms";
+
+type Value = {
+  sideLength: number;
+  price: number;
+};
 
 export function InputForm() {
-  const [length, setLength] = useState(0);
+  const [value, setValue] = useState<Value>({ sideLength: 0, price: 0 });
   const [, setSideLength] = useAtom(sideLengthAtom);
+  const [, setPrice] = useAtom(priceAtom);
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    const { valueAsNumber } = e.target;
-    setLength(valueAsNumber);
+  const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const { name, valueAsNumber } = target;
+    setValue({ ...value, [name]: valueAsNumber });
+  };
+
+  const onButtonClick = () => {
+    setSideLength(value.sideLength);
+    setPrice(value.price);
   };
 
   return (
-    <div className="column">
-      <input
-        className="textbox"
-        type="number"
-        value={length}
-        name="side_length"
-        onChange={handleChange}
-      />
-      <button
-        className="side_length_button"
-        onClick={() => setSideLength(length)}
-      >
-        Set Side Length
-      </button>
+    <div className="container">
+      <div className="row">
+        <label htmlFor="sideLenght">Side length</label>
+        <input
+          className="textbox"
+          type="number"
+          value={value.sideLength}
+          name="sideLength"
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="row">
+        <label htmlFor="price">Price</label>
+        <input
+          className="textbox"
+          type="number"
+          value={value.price}
+          name="price"
+          onChange={handleChange}
+        />
+      </div>
+
+      <button onClick={onButtonClick}>Set Value</button>
     </div>
   );
 }
